@@ -10,4 +10,23 @@
 <body>
   <app-root></app-root>
 </body>
+<script type="text/javascript" src="../node_modules/emailjs-com/dist/email.js"></script>
+
+<script type="text/javascript">
+  window.onload = function() {
+  document.getElementById("contact-form").addEventListener("submit", function(event) {
+  event.preventDefault();
+  // generate a five digit number for the contact_number variable
+  this.contact_number.value = Math.random() * 100000 | 0;
+  // these IDs from the previous steps
+  // parametres- service id, template id
+  emailjs.sendForm("service_efowrko", "template_p5ho0z6", this)
+  .then(function() {
+  console.log("SUCCESS!");
+  }, function(error) {
+  console.log("FAILED…", error);
+  });
+  });
+  }
+  </script>
 </html>
