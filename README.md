@@ -23,6 +23,10 @@ We welcome contributions from the open-source community, by adding of new javasc
 1. **Fork this repository** and create a new branch.
 2. **Find an issue** to work on, or propose a new feature by opening an issue.
 3. **Submit your pull request** before October 31st to make it count for Hacktoberfest!
+   
+## Contributing
+
+We welcome all contributions to the EmailJS project! Please read our [Contributing Guidelines](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md) before you start.
 
 ## Features
 
