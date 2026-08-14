@@ -36,10 +36,6 @@ I'm Sam, and I'm passionate about product engineering and web development. I cre
 ## Overview
 *EmailJS is an Angular-based project designed to provide email functionalities using JavaScript. The application leverages EmailJS to send emails directly from the front-end, making it simple to integrate email sending features without the need for back-end API configurations.*
 
-## Hacktoberfest 2024 ✨
-
-**This project is participating in [Hacktoberfest 2024](https://hacktoberfest.com/)!**
-
 We welcome contributions from the open-source community, by adding of new javascript topics or enhancements to the documentation. Every contribution counts toward your Hacktoberfest goal.
 
 ### How to Contribute
@@ -61,9 +57,6 @@ We welcome all contributions to the EmailJS project! Please read our [Contributi
 ## Prerequisites
 
 Before running this project, ensure that you have the following installed:
-
-- [Node.js](https://nodejs.org/) (v12 or above)
-- [Angular CLI](https://angular.io/cli) (v12 or above)
 - EmailJS account for API access
 
 ## Installation
@@ -123,13 +116,16 @@ Many thanks to these amazing people :
     </tr>
   </tbody>
 </table>
-https://dashboard.emailjs.com/admin/integration
-https://www.emailjs.com/docs/rest-api/send/
-Email Sender
+
+https://api.emailjs.com/api/v1.0/email/send 422
+status: 422 text:"The recipients address is empty"
+If you are getting this do check your email templates variables
 
 ### useful commands to run project
 
 ## Useful Links
+https://dashboard.emailjs.com/admin/integration
+https://www.emailjs.com/docs/rest-api/send/
 
 ### Packages used
 
