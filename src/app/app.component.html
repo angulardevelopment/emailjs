@@ -1,12 +1,128 @@
+<div class="demo-container">
+  <!-- Header / Presentation Banner -->
+  <header class="demo-header">
+    <div class="badge">Angular + EmailJS Best Practices Demo</div>
+    <h1>Serverless Email Sending in Angular</h1>
+    <p class="subtitle">Demonstrating emailjs.send() vs emailjs.sendForm() Utilities</p>
+  </header>
 
-<form id="contact-form">
-<input type="hidden" name="contact_number">
-<label>Name</label>
-<input type="text" name="user_name">
-<label>Email</label>
-<input type="email" name="user_email">
-<label>Message</label>
-<textarea name="message"></textarea>
-<input type="submit" value="Send">
-</form>
+  <!-- Demo Notice -->
+  <div class="config-banner" [class.configured]="isConfigured">
+    <div class="status-indicator"></div>
+    <span>
+      <strong>Mode:</strong> 
+      @if (isConfigured) {
+        Connected to Live EmailJS Account
+      } @else {
+        Presentation Demo Sandbox (Simulated Dispatch)
+      }
+    </span>
+  </div>
 
+  <!-- Utility Method Switcher for Presentation -->
+  <div class="method-selector">
+    <button 
+      type="button" 
+      [class.active]="sendMethod() === 'send'" 
+      (click)="setMethod('send')">
+      ⚙️ emailjs.send() (Object API)
+    </button>
+    <button 
+      type="button" 
+      [class.active]="sendMethod() === 'sendForm'" 
+      (click)="setMethod('sendForm')">
+      📋 emailjs.sendForm() (DOM Form API)
+    </button>
+  </div>
+
+  <main class="demo-card">
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit($event)" class="contact-form">
+
+      <!-- Name Field -->
+      <div class="form-group">
+        <label for="user_name">Speaker / Attendee Name</label>
+        <input 
+          id="user_name" 
+          name="user_name"
+          type="text" 
+          formControlName="user_name" 
+          placeholder="e.g. Sarah Connor"
+          [class.invalid]="contactForm.get('user_name')?.invalid && contactForm.get('user_name')?.touched"
+        />
+        @if (contactForm.get('user_name')?.invalid && contactForm.get('user_name')?.touched) {
+          <small class="error-msg">Name is required (at least 2 characters)</small>
+        }
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="user_email">Email Address</label>
+        <input 
+          id="user_email" 
+          name="user_email"
+          type="email" 
+          formControlName="user_email" 
+          placeholder="sarah@example.com"
+          [class.invalid]="contactForm.get('user_email')?.invalid && contactForm.get('user_email')?.touched"
+        />
+        <!-- Hidden inputs ensuring sendForm populates both to_email and reply_to keys -->
+        <input type="hidden" name="to_email" [value]="contactForm.get('user_email')?.value" />
+        <input type="hidden" name="reply_to" [value]="contactForm.get('user_email')?.value" />
+        @if (contactForm.get('user_email')?.invalid && contactForm.get('user_email')?.touched) {
+          <small class="error-msg">Valid email address is required</small>
+        }
+      </div>
+
+      <!-- Subject Field -->
+      <div class="form-group">
+        <label for="subject">Subject</label>
+        <input 
+          id="subject" 
+          name="subject"
+          type="text" 
+          formControlName="subject"
+          [class.invalid]="contactForm.get('subject')?.invalid && contactForm.get('subject')?.touched"
+        />
+        @if (contactForm.get('subject')?.invalid && contactForm.get('subject')?.touched) {
+          <small class="error-msg">Subject line is required</small>
+        }
+      </div>
+
+      <!-- Message Field -->
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea 
+          id="message" 
+          name="message"
+          rows="4" 
+          formControlName="message" 
+          placeholder="Type your talk message or inquiry here..."
+          [class.invalid]="contactForm.get('message')?.invalid && contactForm.get('message')?.touched"
+        ></textarea>
+        @if (contactForm.get('message')?.invalid && contactForm.get('message')?.touched) {
+          <small class="error-msg">Message must be at least 10 characters long</small>
+        }
+      </div>
+
+      <!-- Submit Button -->
+      <button 
+        type="submit" 
+        class="submit-btn" 
+        [disabled]="isLoading()"
+      >
+        @if (isLoading()) {
+          <span class="spinner"></span> Dispatching...
+        } @else {
+          🚀 Execute {{ sendMethod() }}()
+        }
+      </button>
+
+      <!-- Status Notification -->
+      @if (statusMessage()) {
+        <div class="status-alert" [class.success]="isSuccess()" [class.error]="!isSuccess()">
+          {{ statusMessage() }}
+        </div>
+      }
+    </form>
+  </main>
+</div>
